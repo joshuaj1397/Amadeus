@@ -1,18 +1,28 @@
 var Discord = require('discord.js');
+var Gracenote = require('node-gracenote');
 var auth = require('./auth.json');
 
-var bot = new Discord.Client({
-    token: auth.token,
-    autorun: true
+var graceApi = new Gracenote(auth.gracenote.clientId, auth.gracenote.clientTag, auth.gracenote.userId);
+graceApi.register(function(err, res) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Connected to Gracenote')
+        console.log('User Id: ' + res + '\n');
+    }
 });
 
-bot.login(auth.token);
+var bot = new Discord.Client({
+    token: auth.discord.token,
+    autorun: true
+});
+bot.login(auth.discord.token);
 
 // Listen for messages that start with '*'
 var prefix = '*';
 
 bot.on('ready', function(evt) {
-    console.log('Connected');
+    console.log('Connected to Discord');
     console.log('Logged in as: ');
     console.log(bot.user.username + ' - (' + bot.user.id + ')');
 });
