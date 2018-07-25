@@ -1,0 +1,16 @@
+{
+  "name": "bot-senpai",
+  "version": "1.0.0",
+  "description": "A weeb that manages your discord server assets",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "author": "Joshua Johnson",
+  "license": "ISC",
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "discord.js": "^11.3.2",
+    "winston": "^3.0.0"
+  }
+}
