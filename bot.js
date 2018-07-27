@@ -107,7 +107,9 @@ var leaveVoice = (message) => {
     if (bot.voiceConnections) {
         bot.voiceConnections.first().disconnect();
     } else {
-        message.reply('Baka! I\'m not in a voice channel! ' + Kurisu.angry);
+        message.reply('Baka! I\'m not in a voice channel! ' + Kurisu.angry)
+        .then(sent => sent.delete(5 * 1000))
+        .catch(console.log());
     }
 };
 
@@ -117,12 +119,19 @@ var joinVoice = (message) => {
     if (message.member.voiceChannel) {
         message.member.voiceChannel.join()
             .then(connection => {
+
+                // Let the gif play for 5 secs then delete it
+                // TODO: Make the time to play the gif configurable
                 var randNum = Math.floor(Math.random() * Kurisu.greeting.length)
-                message.reply(Kurisu.greeting[randNum]);
+                message.reply(Kurisu.greeting[randNum])
+                .then(sent => sent.delete(5 * 1000))
+                .catch(console.log());
             })
             .catch(console.log);
     } else {
-        message.reply('You need to join a channel first! ' + Kurisu.angry);
+        message.reply('You need to join a channel first! ' + Kurisu.angry)
+        .then(sent => sent.delete(5 * 1000))
+        .catch(console.log());
     }
 };
 
