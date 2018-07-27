@@ -1,5 +1,7 @@
 #secrets
 auth.json
+googleAuth.json
+googleClientSecret.json
 
 # Logs
 logs
