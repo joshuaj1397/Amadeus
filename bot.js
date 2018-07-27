@@ -70,11 +70,6 @@ bot.on('message', message => {
             // Make the bot say something
             case 'say':
                 message.channel.send(message.content.substring(4));
-                break;
-
-            // Make the bot say something then delete the original message
-            case 'sayd':
-                message.channel.send(message.content.substring(5));
                 message.delete();
                 break;
 
@@ -82,17 +77,20 @@ bot.on('message', message => {
             case 'leave':
             case 'l':
                 leaveVoice(message);
+                message.delete();
                 break;
 
             // Join a voice channel
             case 'join':
             case 'j':
                 joinVoice(message);
+                message.delete();
                 break;
 
             // Search a gif then have the bot post it
             case 'gfycat':
                 var query = message.content.substring(7);
+                message.delete();
                 break;
 
             default:
@@ -104,7 +102,7 @@ var searchGfy = (gfycat, query) => {
 };
 
 var leaveVoice = (message) => {
-    if (bot.voiceConnections) {
+    if (bot.voiceConnections.first()) {
         bot.voiceConnections.first().disconnect();
     } else {
         message.reply('Baka! I\'m not in a voice channel! ' + Kurisu.angry)
