@@ -118,6 +118,7 @@ var joinVoice = (message) => {
         message.reply('I\'m already in a voice channel!' + Kurisu.angry)
         .then(sent => sent.delete(5 * 1000))
         .catch(console.log());
+        return;
     }
 
     if (message.member.voiceChannel) {
