@@ -26,6 +26,7 @@ var bot = new Discord.Client({
     token: auth.discord.token,
     autorun: true
 });
+bot.login(auth.discord.token);
 
 var gracenoteUserId = null;
 var graceApi = new Gracenote(auth.gracenote.clientId, auth.gracenote.clientTag, gracenoteUserId);
@@ -113,6 +114,11 @@ var leaveVoice = (message) => {
 
 var joinVoice = (message) => {
     if (!message.guild) return;
+    if (bot.voiceConnections.first()) {
+        message.reply('I\'m already in a voice channel!' + Kurisu.angry)
+        .then(sent => sent.delete(5 * 1000))
+        .catch(console.log());
+    }
 
     if (message.member.voiceChannel) {
         message.member.voiceChannel.join()
@@ -132,5 +138,3 @@ var joinVoice = (message) => {
         .catch(console.log());
     }
 };
-
-bot.login(auth.discord.token);
