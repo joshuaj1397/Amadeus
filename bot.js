@@ -135,29 +135,30 @@ bot.on('message', message => {
         message.channel.send('world!')
         break
 
-        // Make the bot say something
+      // Make the bot say something
       case 'say':
       case 's':
         message.channel.send(message.content.substring(4))
         message.delete()
         break
 
-        // Leave a voice channel
+      // Leave a voice channel
       case 'leave':
       case 'l':
         leaveVoice(message)
         message.delete()
         break
 
-        // Join a voice channel
+      // Join a voice channel
       case 'join':
       case 'j':
         joinVoice(message)
         message.delete()
         break
 
-        // Search a song on youtube in the form of {Artist} - {Track}
+      // Search a song on youtube in the form of {Artist} - {Track}
       case 'search':
+      case 's':
 
         // Produces {Artist}-{Track} then splits the artist and track using the '-'
         args = args.join('')
@@ -232,7 +233,10 @@ var searchYoutube = async (gAuth, options) => {
   })
   var artist = options.artist
   var track = options.track
-  var query = artist + ' ' + track
+  var query = artist
+  if (track) {
+    query = artist + ' ' + track
+  }
 
   await service.search.list({
     auth: gAuth,
@@ -264,22 +268,21 @@ var searchYoutube = async (gAuth, options) => {
 /*
 Song search view
 ```md
-1. {Artist} - {Track}
+1. {Title}
 ---------------------------------------------------------------|
-2. {Artist} - {Track}
+2. {Title}
 ---------------------------------------------------------------|
-3. {Artist} - {Track}
+3. {Title}
 ---------------------------------------------------------------|
-4. {Artist} - {Track}
+4. {Title}
 ---------------------------------------------------------------|
-5. {Artist} - {Track}
+5. {Title}
 ---------------------------------------------------------------|
 ```
 */
 var buildSongList = (songs) => {
   var messageSongList = '\`\`\`md\n'
   for (let song of songs) {
-    console.log(song)
     var songChoice = song.choiceIndex + '. ' + song.title + '\n' +
       '---------------------------------------------------------------|\n'
       messageSongList = messageSongList.concat(songChoice)
@@ -291,15 +294,15 @@ var buildSongList = (songs) => {
 /*
 Song queue view
 ```md
-1. Gambino - 3005
+1. {Title}
 
-2. Gambino - Sweatpants
+2. {Title}
 
-3. * Gambino - 3005 *
+3. * {Title} *
 
-4. Gambino - Sweatpants
+4. {Title}
 
-5. Gambino - Sweatpants
+5. {Title}
 
 ```
 */
